@@ -1,3 +1,4 @@
+infura_api = 'https://mainnet.infura.io/v3/b000000000000000000000000000' # INFURA API
 apix = '' # INFURA SECRET KEY
 urlx = 'https://api.etherscan.io/api'
 

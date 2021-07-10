@@ -4,8 +4,10 @@ import etherscan as scan
 from web3 import Web3
 import time 
 import db
-w3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/b3593867c26d4c92add264fa5662fd36'))
 import env
+
+infura_api = env.infura_api
+w3 = Web3(Web3.HTTPProvider(infura_api))
 
 apix = env.apix
 urlx = env.urlx
