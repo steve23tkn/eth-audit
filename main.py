@@ -20,8 +20,9 @@ PASS = env.PASS
 db_name = env.db_name
 
 block_one = env.block_one
+delay = env.delay
 
-step = 100_000
+step = env.step
 
 mydb = mysql.connector.connect(
     host=HOST,
@@ -132,7 +133,6 @@ def main():
     mydb.close()
 
 if __name__ == "__main__":
-#    while True:
-#        main()
-#        time.sleep(300)
-    main()
+    while True:
+        main()
+        time.sleep(delay)
