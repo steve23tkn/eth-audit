@@ -36,16 +36,16 @@ def get_recent_block():
     end = int(end['result']) # most recent block
     return end
 
-def populate_normal():
-    begin = block_one
-    end = get_recent_block()
-
+def extract_txs_normal(begin, end):
     from_ = begin 
     to_ = begin + step 
 
-    print(f"extracting normal tx block: {from_} - {to_}")
+    total_blocks = end - begin 
+    loop = total_blocks // step
+    loop += 1
 
-    while from_ < end: 
+    for _ in tqdm( range(0,loop) ):
+        print(f"extracting normal tx block: {from_} - {to_}")
         txs = scan.GetTransactionsByBlock(pool_addr, apix, urlx, from_, to_)      
         if txs['result'] is not None:
             scan.injectNormalDB(mydb, 'normal_tx', txs['result'])
@@ -53,67 +53,47 @@ def populate_normal():
         from_ = to_ + 1
         to_ += step
 
-        print(f"extracting normal tx block: {from_} - {to_}")
+def populate_normal():
+    begin = block_one
+    end = get_recent_block()
+
+    extract_txs_normal(begin, end)
 
 def update_normal():
     begin = db.prevBlockNo(mydb, 'normal_tx') 
     begin += 1
     end = get_recent_block()
 
+    extract_txs_normal(begin, end)
+
+def extract_txs_erc20(begin, end):
     from_ = begin 
     to_ = begin + step 
 
-    print(f"extracting normal tx block: {from_} - {to_}")
+    total_blocks = end - begin 
+    loop = total_blocks // step
+    loop += 1
 
-    while from_ < end: 
-        txs = scan.GetTransactionsByBlock(pool_addr, apix, urlx, from_, to_)      
+    for _ in tqdm( range(0,loop) ):
+        print(f"extracting erc tx block: {from_} - {to_}")
+        txs = scan.GetTransactionsByBlockERC(pool_addr, apix, urlx, from_, to_)  
         if txs['result'] is not None:
-            scan.injectNormalDB(mydb, 'normal_tx', txs['result'])
-
-        from_ = to_ + 1
-        to_ += step
-
-        print(f"extracting normal tx block: {from_} - {to_}")
+            scan.injectErcDB(mydb, 'erc20_tx', txs['result'])
+            from_ = to_ + 1
+            to_ += step
 
 def populate_erc():
     begin = block_one
     end = get_recent_block()
 
-    from_ = begin 
-    to_ = begin + step 
-
-    print(f"extracting erc tx block: {from_} - {to_}")
-
-    txs = scan.GetTransactionsByBlockERC(pool_addr, apix, urlx, from_, to_)  
-
-    while from_ < end: 
-        if txs['result'] is not None:
-            scan.injectErcDB(mydb, 'erc20_tx', txs['result'])
-            #print(txs['result'][0])
-            from_ = to_ + 1
-            to_ += step
-
-            print(f"extracting erc20 tx block: {from_} - {to_}")
+    extract_txs_erc20(begin, end)
 
 def update_erc():
     begin = db.prevBlockNo(mydb, 'erc20_tx') 
     begin += 1
     end = get_recent_block()
 
-    from_ = begin 
-    to_ = begin + step 
-
-    print(f"extracting erc20 tx block: {from_} - {to_}")
-
-    while from_ < end: 
-        txs = scan.GetTransactionsByBlockERC(pool_addr, apix, urlx, from_, to_)      
-        if txs['result'] is not None:
-            scan.injectErcDB(mydb, 'erc20_tx', txs['result'])
-
-        from_ = to_ + 1
-        to_ += step
-
-        print(f"extracting erc tx block: {from_} - {to_}")
+    extract_txs_erc20(begin, end)
 
 def main():
     # NORMAL WORKER

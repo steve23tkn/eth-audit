@@ -18,6 +18,14 @@ DB in use is mysql
 1. sudo pacman -S python-pip
 2. python -m venv my_env
 
+# ENV DEPENDENCIES
+1. source my_env/bin/activate
+2. pip install mysql-connector
+3. pip install mysql-connector-python
+4. pip install requests
+5. pip install tqdm
+6. pip install web3
+
 # ALLOW .SH EXECUTION
 1. chmod +x audit.sh
 

@@ -10,15 +10,18 @@ db_name = env.db_name
 mydb = mysql.connector.connect(
     host=HOST,
     user=USER,
-    password=PASS
+    password=PASS,
+    auth_plugin='mysql_native_password'
 )
 
 # CREATE DB
 mycursor = mydb.cursor()
-mycursor.execute(f"select if( exists(select schema_name from information_schema.schemata where schema_name='{db_name}') , 'True', 'False')")
+mycursor.execute(f"select schema_name from information_schema.schemata where schema_name='{db_name}'")
+n = 0
 for x in mycursor:
-    if x[0]=='False':
-        mycursor.execute(f"create database {db_name}")
+    n += 1
+if n==0:
+    mycursor.execute(f"create database {db_name}")
 mycursor.close()
 mydb.close()
 
