@@ -12,7 +12,7 @@ DB in use is mysql
 6. flush privileges;
 7. now login as stephen: sudo su -l stephen
 8. mysql -u stephen -p
-9. password: somepassword
+9. password: password
 
 # STEPS TO INSTALL PYTHON ENV - ARCH LINUX
 1. sudo pacman -S python-pip
