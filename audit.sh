@@ -4,6 +4,6 @@
 cd /home/stephen
 activate(){
 	. /home/stephen/my_env/bin/activate
-	python /home/stephen/eth-audit/main.py
+	python3 /home/stephen/eth-audit/main.py
 }
 activate
