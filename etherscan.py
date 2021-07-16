@@ -214,6 +214,7 @@ def injectErcDB(mydb, table, txs):
         blockHash_ = tx['blockHash']
         timeStamp_ = tx['timeStamp']
         hash_ = tx['hash']
+        print(f"injecting tx: {hash_}")
         nonce_ = tx['nonce']
 
         transactionIndex_ = tx['transactionIndex']

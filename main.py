@@ -38,7 +38,7 @@ def get_recent_block():
 
 def extract_txs_normal(begin, end):
     from_ = begin 
-    to_ = begin + step 
+    to_ = end
 
     total_blocks = end - begin 
     loop = total_blocks // step
@@ -68,7 +68,7 @@ def update_normal():
 
 def extract_txs_erc20(begin, end):
     from_ = begin 
-    to_ = begin + step 
+    to_ = end
 
     total_blocks = end - begin 
     loop = total_blocks // step
@@ -113,6 +113,6 @@ def main():
     mydb.close()
 
 if __name__ == "__main__":
-    while True:
-        main()
-        time.sleep(delay)
+    #while True:
+    main()
+    #    time.sleep(delay)
